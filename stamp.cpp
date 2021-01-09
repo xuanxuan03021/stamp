@@ -148,10 +148,44 @@ bool make_header(const char *recipient, const char *filename, char *header)
      // cout<<header<<endl;
       return true;
     }
-    
-
+  
   }
   return false;
 }
+
+check_header(const char * email,const char * header,const char *filename){
+
+  int i;
+  for(i=0;email[i]!='\0';i++){
+    if(email[i]!=header[i]){
+      return WRONG_RECIPIENT;
+    }
+  }
+  if(email[i++]!=':'){
+    return INVALID_HEADER;
+  }
+  //digest of the content
+  char content_digest[41];
+  file_to_SHA1_digest(filename,content_digest);
+  for(int j=0;content_digest[j]!='\0';j++){
+    if(email[i++]!=content_digest[j]){
+      return INVALID_MESSAGE_DIGEST;
+    }
+  }
+  if(email[i++]!=':'){
+    return INVALID_HEADER;
+  }
+
+  char header_digest[41];
+  text_to_SHA1_digest(header,header_digest)
+
+  if(leading_zeros(header_digest)<5){
+    return INVALID_HEADER_DIGEST;
+  }
+  return VALID_EMAIL;
+}
+
+
+
 
 /* add your function definitions here */
