@@ -75,6 +75,7 @@ bool file_to_SHA1_digest(const char *filename, char *digest)
       input.get(temp);
     }
   }
+  cout << text << endl;
   text_to_SHA1_digest(text.c_str(), digest);
   return true;
 }
