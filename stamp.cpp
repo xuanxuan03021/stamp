@@ -174,6 +174,7 @@ MessageStatus check_header(const char * email,const char * header,const char *fi
     }
   }
   if(header[i++]!=':'){
+     cout<<"@@@";
     return INVALID_HEADER;
   }
 
