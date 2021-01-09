@@ -42,7 +42,7 @@ int leading_zeros(const char *digest)
 {
   for (int i = 0; i < (int)strlen(digest); i++)
   {
-    if (!((digest[i] > '0' && digest[i] < '9') || (digest[i] > 'a' && digest[i] < 'f')))
+    if (!((digest[i] >= '0' && digest[i] < ='9') || (digest[i] >= 'a' && digest[i] < = 'f')))
     {
       return -1;
     }
@@ -60,8 +60,7 @@ bool file_to_SHA1_digest(const char *filename, char *digest)
   ifstream input;
   char temp;
   string text;
-  char temp_char[2000];
-  int i=0;
+
   input.open(filename);
   if (input.fail())
   {
@@ -73,7 +72,7 @@ bool file_to_SHA1_digest(const char *filename, char *digest)
     input.get(temp);
     while (!input.eof())
     {
-      temp_char[i++]=temp;
+      text+=temp;
       input.get(temp);
     }
   }
