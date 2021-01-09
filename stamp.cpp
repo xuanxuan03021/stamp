@@ -177,7 +177,7 @@ MessageStatus check_header(const char * email,const char * header,const char *fi
   }
 
   char header_digest[41];
-  text_to_SHA1_digest(header,header_digest)
+  text_to_SHA1_digest(header,header_digest);
 
   if(leading_zeros(header_digest)<5){
     return INVALID_HEADER_DIGEST;
