@@ -17,4 +17,4 @@ int leading_zeros(const char* digest);
 bool file_to_SHA1_digest(const char * filename, char * digest);
 
 bool make_header(const char * recipient, const char * filename, char * header);
-check_header(const char * email,const char * header,const char *filename);
+int check_header(const char * email,const char * header,const char *filename);
