@@ -161,18 +161,18 @@ MessageStatus check_header(const char * email,const char * header,const char *fi
       return WRONG_RECIPIENT;
     }
   }
-  if(email[i++]!=':'){
+  if(header[i++]!=':'){
     return INVALID_HEADER;
   }
   //digest of the content
   char content_digest[41];
   file_to_SHA1_digest(filename,content_digest);
   for(int j=0;content_digest[j]!='\0';j++){
-    if(email[i++]!=content_digest[j]){
+    if(header[i++]!=content_digest[j]){
       return INVALID_MESSAGE_DIGEST;
     }
   }
-  if(email[i++]!=':'){
+  if(header[i++]!=':'){
     return INVALID_HEADER;
   }
 
