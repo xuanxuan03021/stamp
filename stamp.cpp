@@ -125,6 +125,7 @@ bool make_header(const char *recipient, const char *filename, char *header)
     //add the counter
      counter_pos = i;
      cout<<counter_pos<<"***";
+     cout<<header;
     // header[i++] = '0';
    // header[i] = '\0';
   }
@@ -140,8 +141,6 @@ bool make_header(const char *recipient, const char *filename, char *header)
       header[temp_counter_pos++]=counter[j];
     }
     header[temp_counter_pos]='\0';
-    cout<<header<<endl;
-
     text_to_SHA1_digest(header, header_digest);
 
     if (leading_zeros(header_digest) > 4)
