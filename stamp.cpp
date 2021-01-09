@@ -114,13 +114,17 @@ bool make_header(const char *recipient, const char *filename, char *header)
     {
       header[i] = digest[i];
     }
+    header[i++] = ':';
+
     //add the digest
     for (int y = 0; digest[y] != '\0'; y++)
     {
       header[i++] = digest[y];
     }
+    header[i++] = ':';
     //add the counter
      counter_pos = i;
+     cout<<counter_pos<<"***";
     // header[i++] = '0';
    // header[i] = '\0';
   }
@@ -136,6 +140,8 @@ bool make_header(const char *recipient, const char *filename, char *header)
       header[temp_counter_pos++]=counter[j];
     }
     header[temp_counter_pos]='\0';
+    cout<<header<<endl;
+
     text_to_SHA1_digest(header, header_digest);
 
     if (leading_zeros(header_digest) > 4)
