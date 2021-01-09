@@ -120,9 +120,9 @@ bool make_header(const char *recipient, const char *filename, char *header)
       header[i++] = digest[y];
     }
     //add the counter
-    counter_pos = i;
-    header[i++] = '0';
-    header[i] = '\0';
+     counter_pos = i;
+    // header[i++] = '0';
+   // header[i] = '\0';
   }
 
   //get the digest of the header
@@ -131,17 +131,19 @@ bool make_header(const char *recipient, const char *filename, char *header)
   for (int z = 0; z < 10000000; z++)
   {
       int temp_counter_pos=counter_pos;
-  text_to_SHA1_digest(header, header_digest);
-
-    if (leading_zeros(header_digest) > 4)
-    {
-      return true;
-    }
-    convert_int_to_char(z,counter);
+      convert_int_to_char(z,counter);
     for(int j=0;counter[j]!='\0';j++){
       header[temp_counter_pos++]=counter[j];
     }
     header[temp_counter_pos]='\0';
+    text_to_SHA1_digest(header, header_digest);
+
+    if (leading_zeros(header_digest) > 4)
+    {
+      cout<<header<<endl;
+      return true;
+    }
+    
 
   }
   return false;
