@@ -82,7 +82,7 @@ bool file_to_SHA1_digest(const char *filename, char *digest)
 
 void convert_int_to_char(int integ, char * charr){
 
-  char num_reverse[11];
+  int num_reverse[11];
   int i=0;
   int z=0;
   while(integ!=0){
@@ -91,7 +91,7 @@ void convert_int_to_char(int integ, char * charr){
     integ=integ/10;
   }
   for(int j=i-1;j>-1;j--){
-    charr[z++]=(int)num_reverse[j]-48;
+    charr[z++]=(char)(num_reverse[j]+48);
   }
   charr[z]='\0';
 }
@@ -112,7 +112,7 @@ bool make_header(const char *recipient, const char *filename, char *header)
     int i;
     for (i = 0; recipient[i] != '\0'; i++)
     {
-      header[i] = digest[i];
+      header[i] = recipient[i];
     }
     header[i++] = ':';
 
@@ -145,7 +145,7 @@ bool make_header(const char *recipient, const char *filename, char *header)
 
     if (leading_zeros(header_digest) > 4)
     {
-      cout<<header<<endl;
+     // cout<<header<<endl;
       return true;
     }
     
