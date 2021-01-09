@@ -153,7 +153,7 @@ bool make_header(const char *recipient, const char *filename, char *header)
   return false;
 }
 
-int check_header(const char * email,const char * header,const char *filename){
+MessageStatus check_header(const char * email,const char * header,const char *filename){
 
   int i;
   for(i=0;email[i]!='\0';i++){
