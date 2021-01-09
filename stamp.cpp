@@ -40,7 +40,7 @@ void text_to_SHA1_digest(const char *text, char *digest)
 
 int leading_zeros(const char *digest)
 {
-  for (int i = 0; i < strlen(digest); i++)
+  for (int i = 0; i < (int)strlen(digest); i++)
   {
     if (!((digest[i] > '0' && digest[i] < '9') || (digest[i] > 'a' && digest[i] < 'f')))
     {
@@ -76,13 +76,14 @@ bool file_to_SHA1_digest(const char *filename, char *digest)
     }
   }
   text_to_SHA1_digest(text.c_str(), digest);
+  return true;
 }
 
 void convert_int_to_char(int integ, char * charr){
 
   char num_reverse[11];
   int i=0;
-  int z=0
+  int z=0;
   while(integ!=0){
     int temp = integ%10;
     num_reverse[i++]=temp;
@@ -128,7 +129,7 @@ bool make_header(const char *recipient, const char *filename, char *header)
   char counter[10];
   for (int z = 0; z < 10000000; z++)
   {
-      char temp_counter_pos=0;
+      int temp_counter_pos=counter_pos;
   text_to_SHA1_digest(header, header_digest);
 
     if (leading_zeros(header_digest) > 4)
