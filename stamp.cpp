@@ -42,7 +42,7 @@ int leading_zeros(const char *digest)
 {
   for (int i = 0; i < (int)strlen(digest); i++)
   {
-    if (!((digest[i] >= '0' && digest[i] < ='9') || (digest[i] >= 'a' && digest[i] < = 'f')))
+    if (!((digest[i] >= '0' && digest[i] <= '9') || (digest[i] >= 'a' && digest[i] <='f')))
     {
       return -1;
     }
