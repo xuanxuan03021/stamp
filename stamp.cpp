@@ -76,7 +76,7 @@ bool file_to_SHA1_digest(const char *filename, char *digest)
       input.get(temp);
     }
   }
-  text_to_SHA1_digest(temp_char, digest);
+  text_to_SHA1_digest(text, digest);
   return true;
 }
 
