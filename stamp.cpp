@@ -13,11 +13,13 @@ using namespace std;
 
 // helper function for internal use only
 // transforms raw binary hash value into human-friendly hexademical form
-void convert_hash(const unsigned char *str, char *output, int hash_length) {
+void convert_hash(const unsigned char *str, char *output, int hash_length)
+{
   char append[16];
-  strcpy (output, "");
-  for (int n=0; n<hash_length; n++) {
-    sprintf(append,"%02x",str[n]);
+  strcpy(output, "");
+  for (int n = 0; n < hash_length; n++)
+  {
+    sprintf(append, "%02x", str[n]);
     strcat(output, append);
   }
 }
@@ -29,10 +31,118 @@ void convert_hash(const unsigned char *str, char *output, int hash_length) {
 // ---> so that the definition of the function SHA1 is    <---
 // ---> included in your program                          <---
 // ***********************************************************
-void text_to_SHA1_digest(const char *text, char *digest) {
+void text_to_SHA1_digest(const char *text, char *digest)
+{
   unsigned char hash[SHA_DIGEST_LENGTH];
-  SHA1( (const unsigned char *) text, strlen(text), hash);
+  SHA1((const unsigned char *)text, strlen(text), hash);
   convert_hash(hash, digest, SHA_DIGEST_LENGTH);
+}
+
+int leading_zeros(const char *digest)
+{
+  for (int i = 0; i < strlen(digest); i++)
+  {
+    if (!((digest[i] > '0' && digest[i] < '9') || (digest[i] > 'a' && digest[i] < 'f')))
+    {
+      return -1;
+    }
+  }
+  int num_zero = 0;
+  for (int i = 0; digest[i] == '0'; i++)
+  {
+    num_zero++;
+  }
+  return num_zero;
+}
+
+bool file_to_SHA1_digest(const char *filename, char *digest)
+{
+  ifstream input;
+  char temp;
+  string text;
+  input.open(filename);
+  if (input.fail())
+  {
+    digest = "error";
+    return false;
+  }
+  else
+  {
+    input.get(temp);
+    while (!input.eof())
+    {
+      text += temp;
+      input.get(temp);
+    }
+  }
+  text_to_SHA1_digest(text.c_str(), digest);
+}
+
+void convert_int_to_char(int integ, char * charr){
+
+  char num_reverse[11];
+  int i=0;
+  int z=0
+  while(integ!=0){
+    int temp = integ%10;
+    num_reverse[i++]=temp;
+    integ=integ/10;
+  }
+  for(int j=i-1;j>-1;j--){
+    charr[z++]=(int)num_reverse[j]-48;
+  }
+  charr[z]='\0';
+}
+
+bool make_header(const char *recipient, const char *filename, char *header)
+{
+  char digest[41];
+  int counter_pos;
+  if (!file_to_SHA1_digest(filename, digest))
+  {
+    return false;
+  }
+
+  //initialize the header
+  else
+  {
+    //add the header
+    int i;
+    for (i = 0; recipient[i] != '\0'; i++)
+    {
+      header[i] = digest[i];
+    }
+    //add the digest
+    for (int y = 0; digest[y] != '\0'; y++)
+    {
+      header[i++] = digest[y];
+    }
+    //add the counter
+    counter_pos = i;
+    header[i++] = '0';
+    header[i] = '\0';
+  }
+
+  //get the digest of the header
+  char header_digest[41];
+  char counter[10];
+  for (int z = 0; z < 10000000; z++)
+  {
+      char temp_counter_pos=0;
+  text_to_SHA1_digest(header, header_digest);
+
+    if (leading_zeros(header_digest) > 4)
+    {
+      return true;
+    }
+    convert_int_to_char(z,counter);
+    for(int j=0;counter[j]!='\0';j++){
+      header[temp_counter_pos++]=counter[j];
+    }
+    header[temp_counter_pos]='\0';
+
+  }
+  return false;
 }
 
 /* add your function definitions here */
