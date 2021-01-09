@@ -60,6 +60,8 @@ bool file_to_SHA1_digest(const char *filename, char *digest)
   ifstream input;
   char temp;
   string text;
+  char temp_char[2000];
+  int i=0;
   input.open(filename);
   if (input.fail())
   {
@@ -71,12 +73,11 @@ bool file_to_SHA1_digest(const char *filename, char *digest)
     input.get(temp);
     while (!input.eof())
     {
-      text += temp;
+      temp_char[i++]=temp;
       input.get(temp);
     }
   }
-  cout << text << endl;
-  text_to_SHA1_digest(text.c_str(), digest);
+  text_to_SHA1_digest(temp_char, digest);
   return true;
 }
 
